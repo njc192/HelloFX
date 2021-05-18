@@ -35,4 +35,9 @@ public class Diamond implements Suit{
         return COLOR;
     }
 
+    public String toString()
+    {
+        return "suit=Diamond";
+    }
+
 }

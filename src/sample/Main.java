@@ -25,7 +25,7 @@ public class Main extends Application {
 
         HBox root = new HBox(10.0);
         root.getChildren().addAll(card1,card2,card3,card4);
-        primaryStage.setScene(new Scene(root, 500, 500,Color.WHITE));
+        primaryStage.setScene(new Scene(root, 750, 750,Color.WHITE));
         primaryStage.show();
     }
 

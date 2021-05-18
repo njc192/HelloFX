@@ -44,4 +44,9 @@ public class Heart implements Suit{
     public Color getColor() {
         return COLOR;
     }
+
+    public String toString()
+    {
+        return "suit=Heart";
+    }
 }

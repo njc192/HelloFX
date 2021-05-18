@@ -1,22 +1,31 @@
 package sample;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import java.util.Stack;
 
 public class Card {
 
     private Group group;
     private Rectangle card;
     private Path suitShape;
-    private StackPane stackPane;
+    private Rank rank;
+
     private Text text_bRank;
     private Text text_tRank;
+    private Image image_card_back;
+    private boolean showingBack = false;
 
 
     private static final int CARDWIDTH = 100;
@@ -32,31 +41,56 @@ public class Card {
 
     public Card(Rank rank, int cardWidth, int cardHeight, Color cardBorderColor)
     {
+        this.rank = rank;
+        image_card_back = new Image("file:///C:\\Users\\njc19\\IdeaProjects\\HelloFX\\res\\img\\trippy.jpg");
+
         card = new Rectangle(cardWidth,cardHeight, Color.WHITE);
+
+
+
         card.setArcHeight(CARDROUNDNESS);
         card.setArcWidth(CARDROUNDNESS);
         card.setStroke(cardBorderColor);
+
+
+        group = new Group();
+
+        StackPane front = getFrontFace();
+
+        group.getChildren().add(front);
+        group.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                flipCard();
+            }
+        });
+    }
+
+    private StackPane getFrontFace()
+    {
+
+
         suitShape = rank.getShape();
 
         text_bRank = new Text();
         text_tRank = new Text();
-        stackPane = new StackPane(card);
-
-        group = new Group();
 
 
+        StackPane front = new StackPane(card);
 
-        stackPane.setPrefHeight(card.getHeight());
-        stackPane.setPrefWidth(card.getWidth());
-
-
-        stackPane.getChildren().addAll(suitShape,initializeRank(rank));
+        front.setPrefHeight(card.getHeight());
+        front.setPrefWidth(card.getWidth());
 
 
-        group.getChildren().add(stackPane);
+
+        front.getChildren().addAll(suitShape,initializeRank());
+
+
+        return front;
+
     }
 
-    private AnchorPane initializeRank(Rank rank)
+    private AnchorPane initializeRank()
     {
 
         AnchorPane anchorPane = new AnchorPane();
@@ -93,6 +127,26 @@ public class Card {
         text_bRank.setFont(rank.getFont());
     }
 
+    public void flipCard()
+    {
+        StackPane sp;
+        if (showingBack)
+        {
+            card.setFill(Color.WHITE);
+            sp = getFrontFace();
+            showingBack = false;
+        }
+        else
+        {
+            card.setFill(new ImagePattern(image_card_back));
+            sp = new StackPane(card);
+            showingBack = true;
+        }
+
+        group.getChildren().add(sp);
+
+    }
+
 
     public Group getCard()
     {
@@ -100,4 +154,11 @@ public class Card {
     }
 
 
+    @Override
+    public String toString() {
+        return "Card{" + rank.getSuit()+
+                "rank=" + rank +
+                ", showingBack=" + showingBack +
+                '}';
+    }
 }

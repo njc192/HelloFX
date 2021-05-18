@@ -112,4 +112,9 @@ public enum Rank {
     {
         return suit.getColor();
     }
+
+    public Suit getSuit()
+    {
+        return suit;
+    }
 }

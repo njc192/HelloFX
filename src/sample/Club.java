@@ -33,4 +33,9 @@ public class Club implements Suit{
     public Color getColor() {
         return Color.BLACK;
     }
+
+    public String toString()
+    {
+        return "suit=Club";
+    }
 }
