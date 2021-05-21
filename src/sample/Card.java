@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -13,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.awt.*;
 import java.util.Stack;
 
 public class Card {
@@ -24,7 +26,7 @@ public class Card {
 
     private Text text_bRank;
     private Text text_tRank;
-    private Image image_card_back;
+    private Image image_card_back = new Image("file:///C:\\Users\\njc19\\IdeaProjects\\HelloFX\\res\\img\\trippy.jpg");
     private boolean showingBack = false;
 
 
@@ -42,7 +44,7 @@ public class Card {
     public Card(Rank rank, int cardWidth, int cardHeight, Color cardBorderColor)
     {
         this.rank = rank;
-        image_card_back = new Image("file:///C:\\Users\\njc19\\IdeaProjects\\HelloFX\\res\\img\\trippy.jpg");
+
 
         card = new Rectangle(cardWidth,cardHeight, Color.WHITE);
 
@@ -64,6 +66,33 @@ public class Card {
                 flipCard();
             }
         });
+    }
+
+    public Card(String string)
+    {
+        if (string.equals("Empty"))
+        {
+            card = new Rectangle(CARDWIDTH,CARDHEIGHT,Color.WHITE);
+            card.setArcHeight(CARDROUNDNESS);
+            card.setArcWidth(CARDROUNDNESS);
+            card.setStroke(Color.BLACK);
+            group = new Group();
+            StackPane sp = new StackPane(card);
+            Text text = new Text();
+            text.setFont(new Font(25));
+
+
+            BorderPane bp = new BorderPane();
+            text.setText("EMPTY");
+
+            bp.setCenter(text);
+
+            sp.getChildren().add(bp);
+
+            group.getChildren().add(sp);
+
+
+        }
     }
 
     private StackPane getFrontFace()
@@ -147,6 +176,16 @@ public class Card {
 
     }
 
+    public void showBack()
+    {
+        card.setFill(new ImagePattern(image_card_back));
+        StackPane sp = new StackPane(card);
+        showingBack = true;
+
+        group.getChildren().add(sp);
+    }
+
+
 
     public Group getCard()
     {
@@ -156,9 +195,14 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" + rank.getSuit()+
+        return "Card{"+
                 "rank=" + rank +
                 ", showingBack=" + showingBack +
                 '}';
+    }
+
+    public Image getImage()
+    {
+        return image_card_back;
     }
 }
