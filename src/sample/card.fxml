@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<Group xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane fx:id="holder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0">
+         <children>
+            <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#cc99ff" height="150.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0">
+               <children>
+                  <Text fx:id="text_tRank" boundsType="VISUAL" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="33.677734375" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="10.0" />
+                  <Text fx:id="text_bRank" layoutX="-2.0" layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="26.13671875" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="75.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</Group>

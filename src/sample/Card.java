@@ -1,6 +1,9 @@
 package sample;
 
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -15,17 +18,20 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.awt.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.Stack;
 
 public class Card {
 
     private Group group;
-    private Rectangle card;
-    private Path suitShape;
+//    private Rectangle card;
+//    private Path suitShape;
     private Rank rank;
 
-    private Text text_bRank;
-    private Text text_tRank;
+
+
+
     private Image image_card_back = new Image("file:///C:\\Users\\njc19\\IdeaProjects\\HelloFX\\res\\img\\trippy.jpg");
     private boolean showingBack = false;
 
@@ -44,146 +50,129 @@ public class Card {
     public Card(Rank rank, int cardWidth, int cardHeight, Color cardBorderColor)
     {
         this.rank = rank;
+        try
+        {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("card.fxml"));
+            CardController cardController = new CardController(rank);
+            loader.setController(cardController);
+            group = loader.load();
 
 
-        card = new Rectangle(cardWidth,cardHeight, Color.WHITE);
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
 
+        //group = new Group();
 
-        card.setArcHeight(CARDROUNDNESS);
-        card.setArcWidth(CARDROUNDNESS);
-        card.setStroke(cardBorderColor);
+        //StackPane front = getFrontFace();
 
-
-        group = new Group();
-
-        StackPane front = getFrontFace();
-
-        group.getChildren().add(front);
+        //group.getChildren().add(front);
         group.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                flipCard();
+
+                System.out.println("push the button");
             }
         });
     }
+//
+//    public Card(String string)
+//    {
+//        if (string.equals("Empty"))
+//        {
+//            card = new Rectangle(CARDWIDTH,CARDHEIGHT,Color.WHITE);
+//            card.setArcHeight(CARDROUNDNESS);
+//            card.setArcWidth(CARDROUNDNESS);
+//            card.setStroke(Color.BLACK);
+//            group = new Group();
+//            StackPane sp = new StackPane(card);
+//            Text text = new Text();
+//            text.setFont(new Font(25));
+//
+//
+//            BorderPane bp = new BorderPane();
+//            text.setText("EMPTY");
+//
+//            bp.setCenter(text);
+//
+//            sp.getChildren().add(bp);
+//
+//            group.getChildren().add(sp);
+//
+//
+//        }
+//    }
+//
+//    private StackPane getFrontFace()
+//    {
+//
+//
+//        suitShape = rank.getShape();
+//
+//        StackPane front = new StackPane(card);
+//
+//        front.setPrefHeight(card.getHeight());
+//        front.setPrefWidth(card.getWidth());
+//
+//
+//
+//        front.getChildren().addAll(suitShape);
+//
+//
+//        return front;
+//
+//    }
 
-    public Card(String string)
-    {
-        if (string.equals("Empty"))
-        {
-            card = new Rectangle(CARDWIDTH,CARDHEIGHT,Color.WHITE);
-            card.setArcHeight(CARDROUNDNESS);
-            card.setArcWidth(CARDROUNDNESS);
-            card.setStroke(Color.BLACK);
-            group = new Group();
-            StackPane sp = new StackPane(card);
-            Text text = new Text();
-            text.setFont(new Font(25));
-
-
-            BorderPane bp = new BorderPane();
-            text.setText("EMPTY");
-
-            bp.setCenter(text);
-
-            sp.getChildren().add(bp);
-
-            group.getChildren().add(sp);
-
-
-        }
-    }
-
-    private StackPane getFrontFace()
-    {
-
-
-        suitShape = rank.getShape();
-
-        text_bRank = new Text();
-        text_tRank = new Text();
-
-
-        StackPane front = new StackPane(card);
-
-        front.setPrefHeight(card.getHeight());
-        front.setPrefWidth(card.getWidth());
+//    private AnchorPane initializeRank()
+//    {
+//
+//        AnchorPane anchorPane = new AnchorPane();
+//
+//
+//        anchorPane.getChildren().addAll(text_bRank,text_tRank);
+//        AnchorPane.setTopAnchor(text_tRank,10.0);
+//        AnchorPane.setRightAnchor(text_tRank,card.getWidth()-card.getWidth()/4);
+//        AnchorPane.setBottomAnchor(text_bRank,10.0);
+//        AnchorPane.setLeftAnchor(text_bRank,card.getWidth()-(card.getWidth()/4));
+//
+//        return anchorPane;
+//    }
 
 
 
-        front.getChildren().addAll(suitShape,initializeRank());
-
-
-        return front;
-
-    }
-
-    private AnchorPane initializeRank()
-    {
-
-        AnchorPane anchorPane = new AnchorPane();
-
-        Text t = rank.getText();
-        t.setFont(new Font(25));
-        t.setFill(Color.WHITE);
-        t.setStroke(rank.getColor());
-
-        setRank(t);
-
-        anchorPane.getChildren().addAll(text_bRank,text_tRank);
-        AnchorPane.setTopAnchor(text_tRank,10.0);
-        AnchorPane.setRightAnchor(text_tRank,card.getWidth()-card.getWidth()/4);
-        AnchorPane.setBottomAnchor(text_bRank,10.0);
-        AnchorPane.setLeftAnchor(text_bRank,card.getWidth()-(card.getWidth()/4));
-
-        return anchorPane;
-    }
-
-    private void setRank(Text rank)
-    {
-
-        text_tRank.setText(rank.getText());
-        text_bRank.setText(rank.getText());
-
-        text_tRank.setStroke(rank.getStroke());
-        text_bRank.setStroke(rank.getStroke());
-
-        text_tRank.setFill(rank.getFill());
-        text_bRank.setFill(rank.getFill());
-
-        text_tRank.setFont(rank.getFont());
-        text_bRank.setFont(rank.getFont());
-    }
-
-    public void flipCard()
-    {
-        StackPane sp;
-        if (showingBack)
-        {
-            card.setFill(Color.WHITE);
-            sp = getFrontFace();
-            showingBack = false;
-        }
-        else
-        {
-            card.setFill(new ImagePattern(image_card_back));
-            sp = new StackPane(card);
-            showingBack = true;
-        }
-
-        group.getChildren().add(sp);
-
-    }
-
-    public void showBack()
-    {
-        card.setFill(new ImagePattern(image_card_back));
-        StackPane sp = new StackPane(card);
-        showingBack = true;
-
-        group.getChildren().add(sp);
-    }
+//    public void flipCard()
+//    {
+//        StackPane sp;
+//        if (showingBack)
+//        {
+//            card.setFill(Color.WHITE);
+//            sp = getFrontFace();
+//            showingBack = false;
+//        }
+//        else
+//        {
+//            card.setFill(new ImagePattern(image_card_back));
+//            sp = new StackPane(card);
+//            showingBack = true;
+//        }
+//
+//        group.getChildren().add(sp);
+//
+//    }
+//
+//    public void showBack()
+//    {
+//        card.setFill(new ImagePattern(image_card_back));
+//        StackPane sp = new StackPane(card);
+//        showingBack = true;
+//
+//        group.getChildren().add(sp);
+//    }
 
 
 
