@@ -23,7 +23,7 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Group root = new Card(Rank.ACEofDIAMONDS).getCard();
+        Group root = new Card(Rank.THREEofHEARTS).getCard();
         primaryStage.setScene(new Scene(root, 750, 750,Color.WHITE));
         primaryStage.show();
 
