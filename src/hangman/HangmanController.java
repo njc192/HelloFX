@@ -47,7 +47,7 @@ public class HangmanController implements Initializable {
     public HangmanController(String word)
     {
         this.word = word;
-        System.out.println(word);
+        //System.out.println(word);
         wrong_count = 0;
         correct_count =0;
         hangmanParts = new Node[7];
